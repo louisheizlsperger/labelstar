@@ -97,7 +97,7 @@ formula_fe <- as.formula("price ~ carat + depth + carat*depth | cut + color | 0 
 
 # Get updated labels using the new function
 labels <- labelstar::get_labels(formula_fe, diamonds,
-                                interaction_symbol = " : ", fe_symbol = "X")
+                                interaction_symbol = " : ", fe_symbol = "checkmark")
 
 # Run a more regression model with fixed effects
 model <- lfe::felm(formula_fe, data = diamonds)

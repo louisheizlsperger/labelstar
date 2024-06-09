@@ -575,10 +575,11 @@ the lfe package.</p>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>formula_fe <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">&quot;price ~ carat + depth + carat*depth | cut + color | 0 | cut&quot;</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># Get updated labels using the new function</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>labels <span class="ot">&lt;-</span> labelstar<span class="sc">::</span><span class="fu">get_labels</span>(formula_fe, diamonds)</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># Run a more regression model with fixed effects</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>model <span class="ot">&lt;-</span> lfe<span class="sc">::</span><span class="fu">felm</span>(formula_fe, <span class="at">data =</span> diamonds)</span></code></pre></div>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>labels <span class="ot">&lt;-</span> labelstar<span class="sc">::</span><span class="fu">get_labels</span>(formula_fe, diamonds,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                                <span class="at">interaction_symbol =</span> <span class="st">&quot; : &quot;</span>, <span class="at">fe_symbol =</span> <span class="st">&quot;checkmark&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># Run a more regression model with fixed effects</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>model <span class="ot">&lt;-</span> lfe<span class="sc">::</span><span class="fu">felm</span>(formula_fe, <span class="at">data =</span> diamonds)</span></code></pre></div>
 <p>Again, we create the <code>stargazer</code> table using custom
 labels.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Display the regression results with labeled variables</span></span>
@@ -692,7 +693,7 @@ Weight : Total depth percentage
 Quality of the cut - FE
 </td>
 <td>
-X
+✓
 </td>
 </tr>
 <tr>
@@ -700,7 +701,7 @@ X
 Color - FE
 </td>
 <td>
-X
+✓
 </td>
 </tr>
 <tr>

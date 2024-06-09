@@ -404,10 +404,7 @@ labels.</p>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&#39;html&#39;</span>, </span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>          <span class="co"># Variable labels</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>          <span class="at">dep.var.labels =</span> labels<span class="sc">$</span>dep_var_label, </span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>          <span class="at">covariate.labels =</span> labels<span class="sc">$</span>covariate_labels,</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>          <span class="co"># Additional table details</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>          <span class="at">notes =</span> labels<span class="sc">$</span>table_notes)</span></code></pre></div>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>          <span class="at">covariate.labels =</span> labels<span class="sc">$</span>covariate_labels)</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="2" style="border-bottom: 1px solid black">
@@ -553,37 +550,30 @@ F Statistic
 <em>Note:</em>
 </td>
 <td style="text-align:right">
-*** 1 percent level; ** 5 percent level; * 10 percent level
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05;
+<sup></strong></em></sup>p&lt;0.01
 </td>
 </tr>
 </table>
-</div>
-<div id="more-advanced-usage" class="section level2">
-<h2>More Advanced Usage</h2>
-<p>Extend the example to include more covariates and fixed effects using
-the lfe package.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(lfe)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; Loading required package: Matrix</span></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Update formula to include more covariates</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>formula_fe <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">&quot;price ~ carat + depth + carat*depth | cut + color | 0 | cut&quot;</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># Get updated labels using the new function</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>labels <span class="ot">&lt;-</span> labelstar<span class="sc">::</span><span class="fu">get_labels</span>(formula_fe, diamonds,</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                                <span class="at">interaction_symbol =</span> <span class="st">&quot; : &quot;</span>, <span class="at">fe_symbol =</span> <span class="st">&quot;checkmark&quot;</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># Run a more regression model with fixed effects</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>model <span class="ot">&lt;-</span> lfe<span class="sc">::</span><span class="fu">felm</span>(formula_fe, <span class="at">data =</span> diamonds)</span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Update formulas to include more covariates</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>formula_fe1 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">&quot;price ~ carat + depth + carat*depth | cut | 0 | cut&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>formula_fe2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">&quot;price ~ carat + depth + carat*depth + y | cut + color | 0 | cut&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>formulas <span class="ot">&lt;-</span> <span class="fu">c</span>(formula_fe1, formula_fe2)</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># Get updated labels</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>labels <span class="ot">&lt;-</span> labelstar<span class="sc">::</span><span class="fu">get_labels</span>(formulas, diamonds,</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>                                <span class="at">interaction_symbol =</span> <span class="st">&quot; : &quot;</span>, <span class="at">fe_symbol =</span> <span class="st">&quot;checkmark&quot;</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># Estimate regression models with fixed effects</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="at">.x =</span> formulas, <span class="at">.f =</span> lfe<span class="sc">::</span>felm,</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>                     <span class="at">data =</span> diamonds)</span></code></pre></div>
 <p>Again, we create the <code>stargazer</code> table using custom
 labels.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Display the regression results with labeled variables</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">stargazer</span>(model, </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">stargazer</span>(models, </span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&#39;html&#39;</span>, </span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>          <span class="co"># Variable labels</span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>          <span class="at">dep.var.labels =</span> labels<span class="sc">$</span>dep_var_label,</span>
@@ -594,31 +584,41 @@ labels.</p>
 <span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>          <span class="at">notes =</span> labels<span class="sc">$</span>table_notes)</span></code></pre></div>
 <table style="text-align:center">
 <tr>
-<td colspan="2" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
-<td>
+<td colspan="2">
 <em>Dependent variable:</em>
 </td>
 </tr>
 <tr>
 <td>
 </td>
-<td colspan="1" style="border-bottom: 1px solid black">
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="2">
+Price (in US dollars)
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-Price (in US dollars)
+(1)
+</td>
+<td>
+(2)
 </td>
 </tr>
 <tr>
-<td colspan="2" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
@@ -626,18 +626,26 @@ Price (in US dollars)
 Weight
 </td>
 <td>
-20,008.600<sup>**</sup>
+18,970.420<sup>**</sup>
+</td>
+<td>
+23,252.100<sup>**</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(4,882.968)
+(4,927.032)
+</td>
+<td>
+(5,904.517)
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
+</td>
+<td>
 </td>
 <td>
 </td>
@@ -647,18 +655,53 @@ Weight
 Total depth percentage
 </td>
 <td>
-136.096<sup>*</sup>
+110.992
+</td>
+<td>
+131.181
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(54.608)
+(58.118)
+</td>
+<td>
+(66.939)
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Width (in mm)
+</td>
+<td>
+</td>
+<td>
+-650.869<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(234.233)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
 </td>
 <td>
 </td>
@@ -668,14 +711,20 @@ Total depth percentage
 Weight : Total depth percentage
 </td>
 <td>
--191.428<sup>*</sup>
+-179.676<sup>*</sup>
+</td>
+<td>
+-219.581<sup>*</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(79.415)
+(80.122)
+</td>
+<td>
+(93.839)
 </td>
 </tr>
 <tr>
@@ -683,14 +732,19 @@ Weight : Total depth percentage
 </td>
 <td>
 </td>
+<td>
+</td>
 </tr>
 <tr>
-<td colspan="2" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 Quality of the cut - FE
+</td>
+<td>
+✓
 </td>
 <td>
 ✓
@@ -701,11 +755,15 @@ Quality of the cut - FE
 Color - FE
 </td>
 <td>
+</td>
+<td>
 ✓
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
+</td>
+<td>
 </td>
 <td>
 </td>
@@ -717,13 +775,19 @@ Observations
 <td>
 53,940
 </td>
+<td>
+53,940
+</td>
 </tr>
 <tr>
 <td style="text-align:left">
 R<sup>2</sup>
 </td>
 <td>
-0.872
+0.858
+</td>
+<td>
+0.876
 </td>
 </tr>
 <tr>
@@ -731,7 +795,10 @@ R<sup>2</sup>
 Adjusted R<sup>2</sup>
 </td>
 <td>
-0.872
+0.858
+</td>
+<td>
+0.876
 </td>
 </tr>
 <tr>
@@ -739,25 +806,28 @@ Adjusted R<sup>2</sup>
 Residual Std. Error
 </td>
 <td>
-1,424.894 (df = 53926)
+1,504.539 (df = 53932)
+</td>
+<td>
+1,407.387 (df = 53925)
 </td>
 </tr>
 <tr>
-<td colspan="2" style="border-bottom: 1px solid black">
+<td colspan="3" style="border-bottom: 1px solid black">
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 <em>Note:</em>
 </td>
-<td style="text-align:right">
+<td colspan="2" style="text-align:right">
 *** 1 percent level; ** 5 percent level; * 10 percent level
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
-<td style="text-align:right">
+<td colspan="2" style="text-align:right">
 Standard errors are clustered by Quality of the cut.
 </td>
 </tr>

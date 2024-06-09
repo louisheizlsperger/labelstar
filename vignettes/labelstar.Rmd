@@ -80,34 +80,31 @@ stargazer(model,
           type = 'html', 
           # Variable labels
           dep.var.labels = labels$dep_var_label, 
-          covariate.labels = labels$covariate_labels,
-          # Additional table details
-          notes.append = FALSE,
-          notes = labels$table_notes)
+          covariate.labels = labels$covariate_labels)
 ```
 
-## More Advanced Usage
-Extend the example to include more covariates and fixed effects using the lfe package.
 
 ```{r fe-spec}
 library(lfe)
 
-# Update formula to include more covariates
-formula_fe <- as.formula("price ~ carat + depth + carat*depth | cut + color | 0 | cut")
+# Update formulas to include more covariates
+formula_fe1 <- as.formula("price ~ carat + depth + carat*depth | cut | 0 | cut")
+formula_fe2 <- as.formula("price ~ carat + depth + carat*depth + y | cut + color | 0 | cut")
+formulas <- c(formula_fe1, formula_fe2)
 
-# Get updated labels using the new function
-labels <- labelstar::get_labels(formula_fe, diamonds,
+# Get updated labels
+labels <- labelstar::get_labels(formulas, diamonds,
                                 interaction_symbol = " : ", fe_symbol = "checkmark")
 
-# Run a more regression model with fixed effects
-model <- lfe::felm(formula_fe, data = diamonds)
+# Run regression models with fixed effects
+models <- lfe::felm(formulas, data = diamonds)
 ```
 
 Again, we create the ```stargazer``` table using custom labels.
 
 ```{r fe-table, results = "asis"}
 # Display the regression results with labeled variables
-stargazer(model, 
+stargazer(models, 
           type = 'html', 
           # Variable labels
           dep.var.labels = labels$dep_var_label,

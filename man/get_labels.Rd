@@ -2,12 +2,12 @@
 % Please edit documentation in R/get_labels.R
 \name{get_labels}
 \alias{get_labels}
-\title{Retrieve Labels for Outcome Variable, Covariates, Fixed Effects, and Clustering Variables from a Formula}
+\title{Retrieve Labels for Outcome Variable, Covariates, Fixed Effects, and Clustering Variables from Formulas}
 \usage{
-get_labels(formula, data, interaction_symbol = " : ", fe_symbol = "X")
+get_labels(formulas, data, interaction_symbol = " : ", fe_symbol = "X")
 }
 \arguments{
-\item{formula}{The model formula.}
+\item{formulas}{A list of model formulas.}
 
 \item{data}{The data frame containing the variables.}
 
@@ -17,11 +17,11 @@ get_labels(formula, data, interaction_symbol = " : ", fe_symbol = "X")
 }
 \value{
 A list with four elements: \code{dep_var_label} for the outcome variable label,
-\code{covariate_labels} for the covariate labels, \code{fe_labels} for the fixed effects labels,
-and \code{clustering_labels} for the clustering variable labels.
+\code{covariate_labels} for the covariate labels (only for the longest specification),
+\code{fe_labels} for the fixed effects labels, and \code{clustering_labels} for the clustering variable labels.
 }
 \description{
 This function retrieves the label of the outcome variable, the labels of the covariates,
-the fixed effects, and the clustering variables from a given formula and data frame.
+the fixed effects, and the clustering variables from given formulas and a data frame.
 The user can specify the preferred symbols for interaction terms and fixed effects.
 }

@@ -4,12 +4,16 @@
 \alias{get_labels}
 \title{Retrieve Labels for Outcome Variable, Covariates, Fixed Effects, and Clustering Variables from a Formula}
 \usage{
-get_labels(formula, data)
+get_labels(formula, data, interaction_symbol = " : ", fe_symbol = "X")
 }
 \arguments{
 \item{formula}{The model formula.}
 
 \item{data}{The data frame containing the variables.}
+
+\item{interaction_symbol}{A character string representing the preferred symbol for interaction terms (e.g., ":" or "x").}
+
+\item{fe_symbol}{A character string representing the preferred symbol for the inclusion of fixed effects (e.g., "x" or "Yes").}
 }
 \value{
 A list with four elements: \code{dep_var_label} for the outcome variable label,
@@ -19,4 +23,5 @@ and \code{clustering_labels} for the clustering variable labels.
 \description{
 This function retrieves the label of the outcome variable, the labels of the covariates,
 the fixed effects, and the clustering variables from a given formula and data frame.
+The user can specify the preferred symbols for interaction terms and fixed effects.
 }

@@ -4,7 +4,7 @@
 \alias{get_var_label}
 \title{Retrieve Variable Label from Term}
 \usage{
-get_var_label(term, data)
+get_var_label(term, data, interaction_symbol = " : ")
 }
 \arguments{
 \item{term}{A character string representing the term for which the label is to be retrieved. This can be a variable name,

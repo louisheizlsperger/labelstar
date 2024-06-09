@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3836857.svg)](https://doi.org/10.5281/zenodo.3836857)
 
-`labelstar` provides an easy way to use variable labels for `stargazer` tables. It simplifies the task for researchers by automatically extracting and applying labels based on a given formula and dataset. See the [vignette](https://htmlpreview.github.io/?https://github.com/louisheizlsperger/labelstar/blob/master/doc/labelstar.html) for an introduction to `labelstar`.
+`labelstar` provides an easy way to use variable labels for `stargazer` tables. It simplifies the task for researchers by automatically extracting and applying labels based on a given formula and dataset. See the [vignette](https://htmlpreview.github.io/?https://github.com/louisheizlsperger/labelstar/blob/master/vignettes/labelstar.html) for an introduction to `labelstar`.
 
 ## Quick setup
 

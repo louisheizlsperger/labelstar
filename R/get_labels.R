@@ -2,16 +2,21 @@
 #'
 #' This function retrieves the label of the outcome variable, the labels of the covariates,
 #' the fixed effects, and the clustering variables from a given formula and data frame.
+#' The user can specify the preferred symbols for interaction terms and fixed effects.
 #'
 #' @param formula The model formula.
 #' @param data The data frame containing the variables.
+#' @param interaction_symbol A character string representing the preferred symbol for interaction terms (e.g., ":" or "x").
+#' @param fe_symbol A character string representing the preferred symbol for the inclusion of fixed effects (e.g., "x" or "Yes").
 #' @return A list with four elements: `dep_var_label` for the outcome variable label,
 #' `covariate_labels` for the covariate labels, `fe_labels` for the fixed effects labels,
 #' and `clustering_labels` for the clustering variable labels.
 #' @import stringr
+#' @import dplyr
 #' @export
 #'
-get_labels <- function(formula, data) {
+get_labels <- function(formula, data,
+                       interaction_symbol = " : ", fe_symbol = "X") {
 
   #=#=#=#=#=#=#=#=#=#=#=#
   ## Dependent variable
@@ -38,11 +43,17 @@ get_labels <- function(formula, data) {
   # Extract covariates
   covariates <- stringr::str_split(covariate_str, pattern = "\\+") %>%
     unlist() %>% stringr::str_trim()
-  covariate_labels <- sapply(covariates, get_var_label, data = data)
+  covariate_labels <- sapply(covariates, get_var_label, data = data,
+                             interaction_symbol = interaction_symbol)
 
   #=#=#=#=#=#=#=#=#=#=#=#
   ## Fixed effects
   #=#=#=#=#=#=#=#=#=#=#=#
+
+  # Options
+  if (str_detect(fe_symbol, "check")) {
+    fe_symbol <- "\u2713"
+  }
 
   # Extract fixed effects if present
   fe_labels <- if (length(rhs_parts) > 2) {
@@ -54,7 +65,7 @@ get_labels <- function(formula, data) {
 
   # Create the add_lines for fixed effects
   add_lines <- if (!is.null(fe_labels)) {
-    lapply(fe_labels, function(label) c(paste0(label, " - FE"), "X"))
+    lapply(fe_labels, function(label) c(paste0(label, " - FE"), fe_symbol))
   } else {
     list()
   }

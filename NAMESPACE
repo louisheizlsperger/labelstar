@@ -2,4 +2,5 @@
 
 export(assign_labels)
 export(get_labels)
+import(dplyr)
 import(stringr)

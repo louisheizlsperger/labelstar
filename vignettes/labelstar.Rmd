@@ -96,8 +96,9 @@ formulas <- c(formula_fe1, formula_fe2)
 labels <- labelstar::get_labels(formulas, diamonds,
                                 interaction_symbol = " : ", fe_symbol = "checkmark")
 
-# Run regression models with fixed effects
-models <- lfe::felm(formulas, data = diamonds)
+# Estimate regression models with fixed effects
+models <- purrr::map(.x = formulas, .f = lfe::felm,
+                     data = diamonds)
 ```
 
 Again, we create the ```stargazer``` table using custom labels.

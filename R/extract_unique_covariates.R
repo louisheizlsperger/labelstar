@@ -7,6 +7,7 @@
 #' @return A character vector containing all unique covariates in the order they appear across the formulas.
 #' @import stringr
 #' @import purrr
+#' @import dplyr
 #' @export
 #'
 extract_unique_covariates <- function(formulas) {

@@ -19,11 +19,6 @@
 get_labels <- function(formulas, data,
                        interaction_symbol = " : ", fe_symbol = "X") {
 
-  # formulas <- formulas
-  # interaction_symbol = " : "
-  # fe_symbol <- "X"
-  # data <- diamonds
-
   # Ensure formulas is a list
   if (!is.list(formulas)) {
     formulas <- list(formulas)

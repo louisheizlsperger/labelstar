@@ -21,9 +21,7 @@ detect_included_fes <- function(formulas, data, fe_symbol = "X") {
 
   # Extract fixed effects
   fixed_effects_list <- purrr::map(formulas, function(formula) {
-
     formula_str <- as.character(formula)
-
     rhs <- formula_str[3]
     rhs_parts <- stringr::str_split(rhs, "\\|")[[1]]
 
@@ -33,25 +31,25 @@ detect_included_fes <- function(formulas, data, fe_symbol = "X") {
     } else {
       return(character(0))
     }
-
   })
 
   # Determine unique fixed effects
   unique_fixed_effects <- unique(purrr::flatten_chr(fixed_effects_list))
 
+  # Number of specifications
+  num_specs <- length(formulas)
+
   # Create a list to track the inclusion of each fixed effect in each specification
   fe_inclusion_list <- purrr::map(unique_fixed_effects, function(fe) {
-
     included_in <- purrr::map_lgl(fixed_effects_list, ~ fe %in% .x)
     symbols <- ifelse(included_in, fe_symbol, "")
-    c(paste0(get_var_label(fe, data), " - FE"), symbols[symbols != ""])
-
+    c(paste0(get_var_label(fe, data), " - FE"), symbols)
   })
 
   names(fe_inclusion_list) <- unique_fixed_effects
 
-  # Add space element
-  fe_inclusion_list$space <- c("", "")
+  # Add space element with as many "" as specifications, plus 1
+  fe_inclusion_list$space <- rep("", num_specs + 1)
 
   return(fe_inclusion_list)
 

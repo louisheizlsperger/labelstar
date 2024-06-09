@@ -22,7 +22,7 @@ get_var_label <- function(term, data, interaction_symbol = ' : ') {
   }
 
   if (grepl('^log\\(1 \\+ .+\\)$', term)) {
-    var_name <- sub('log\\(1 \\+ (.+)\\)', '\\1', term)
+    var_name <- sub('log\\(1 \\+ .+\\)', '\\1', term)
   } else if (grepl('^log\\(.+\\)$', term)) {
     var_name <- sub('log\\((.+)\\)', '\\1', term)
   } else {

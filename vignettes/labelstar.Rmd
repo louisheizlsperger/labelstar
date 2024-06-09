@@ -1,0 +1,121 @@
+---
+title: "Enhancing Variable Labels in Regression Models with labelstar"
+author: "Louis-Jonas Heizlsperger"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Enhancing Variable Labels in Regression Models with labelstar}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+## Introduction
+
+The `labelstar` package provides tools to enhance your regression models with descriptive variable labels. This vignette demonstrates how to use `labelstar` to apply custom labels to variables and integrate these labels into regression output using the `stargazer` package.
+
+## Installation
+
+First, install the `labelstar` package from GitHub:
+
+```{r setup, results = "hide", message = FALSE, warning = FALSE}
+devtools::install_github('https://github.com/louisheizlsperger/labelstar')
+library(labelstar)
+```
+
+## Load the Data
+
+We will use the `diamonds` dataset included in `ggplot2` as an example, and define custom labels for it.
+
+```{r load-data}
+# Load ggplot2 package for example dataset
+library(ggplot2)
+
+# Define custom variable labels
+variable_labels <- list(
+  price = "Price (in US dollars)",
+  carat = "Weight",
+  cut = "Quality of the cut",
+  color = "Color",
+  clarity = "Clarity ",
+  x = "Length (in mm)",
+  y = "Width (in mm)",
+  z = "Depth (in mm)",
+  depth = "Total depth percentage",
+  table = "Width of top relative to widest point"
+)
+```
+
+## Basic Usage
+Apply the labels to the dataset and demonstrate basic usage with a simple regression model.
+
+```{r ols-spec, results = "hide", message = FALSE, warning = FALSE}
+library(stargazer)
+
+# Apply the labels to the dataset
+diamonds <- labelstar::assign_labels(diamonds, variable_labels)
+
+# Example formula
+formula_basic <- as.formula("price ~ carat + depth")
+
+# Get variable labels using the new function
+labels <- labelstar::get_labels(formula_basic, diamonds)
+
+# Run regression
+model <- lm(formula_basic, data = diamonds)
+```
+
+Now we create the ```stargazer``` table with our custom labels.
+
+```{r ols-table, results = "asis"}
+# Display the regression results with labeled variables
+stargazer(model, 
+          type = 'html', 
+          # Variable labels
+          dep.var.labels = labels$dep_var_label, 
+          covariate.labels = labels$covariate_labels,
+          # Additional table details
+          notes.append = FALSE,
+          notes = labels$table_notes)
+```
+
+## More Advanced Usage
+Extend the example to include more covariates and fixed effects using the lfe package.
+
+```{r fe-spec}
+library(lfe)
+
+# Update formula to include more covariates
+formula_fe <- as.formula("price ~ carat + depth + carat*depth | cut + color | 0 | cut")
+
+# Get updated labels using the new function
+labels <- labelstar::get_labels(formula_fe, diamonds)
+
+# Run a more regression model with fixed effects
+model <- lfe::felm(formula_fe, data = diamonds)
+```
+
+Again, we create the ```stargazer``` table using custom labels.
+
+```{r fe-table, results = "asis"}
+# Display the regression results with labeled variables
+stargazer(model, 
+          type = 'html', 
+          # Variable labels
+          dep.var.labels = labels$dep_var_label,
+          covariate.labels = labels$covariate_labels,
+          # Additional table details
+          add.lines = labels$fe_labels,
+          notes.append = FALSE,
+          notes = labels$table_notes)
+```
+
+## Conclusion
+The ```labelstar``` package provides a convenient way to apply descriptive labels to variables in your datasets and ensures these labels are reflected in your regression outputs. This enhances the readability and interpretability of your statistical analyses.

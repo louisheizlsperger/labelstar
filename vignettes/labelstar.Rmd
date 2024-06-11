@@ -89,7 +89,7 @@ library(lfe)
 
 # Update formulas to include more covariates
 formula_fe1 <- as.formula("price ~ carat + depth + carat*depth | cut | 0 | cut")
-formula_fe2 <- as.formula("price ~ carat + depth + carat*depth + y | cut + color | 0 | cut")
+formula_fe2 <- as.formula("price ~ carat + depth + carat*depth + log(1 + y) | cut + color | 0 | cut")
 formulas <- c(formula_fe1, formula_fe2)
 
 # Get updated labels

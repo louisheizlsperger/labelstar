@@ -12,7 +12,7 @@
 
 <meta name="author" content="Louis-Jonas Heizlsperger" />
 
-<meta name="date" content="2024-06-09" />
+<meta name="date" content="2024-06-11" />
 
 <title>Enhancing Variable Labels in Regression Models with labelstar</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Enhancing Variable Labels in Regression
 Models with labelstar</h1>
 <h4 class="author">Louis-Jonas Heizlsperger</h4>
-<h4 class="date">2024-06-09</h4>
+<h4 class="date">2024-06-11</h4>
 
 
 
@@ -560,7 +560,7 @@ F Statistic
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Update formulas to include more covariates</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>formula_fe1 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">&quot;price ~ carat + depth + carat*depth | cut | 0 | cut&quot;</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>formula_fe2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">&quot;price ~ carat + depth + carat*depth + y | cut + color | 0 | cut&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>formula_fe2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="st">&quot;price ~ carat + depth + carat*depth + log(1 + y) | cut + color | 0 | cut&quot;</span>)</span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>formulas <span class="ot">&lt;-</span> <span class="fu">c</span>(formula_fe1, formula_fe2)</span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># Get updated labels</span></span>
@@ -629,7 +629,7 @@ Weight
 18,970.420<sup>**</sup>
 </td>
 <td>
-23,252.100<sup>**</sup>
+23,779.300<sup>**</sup>
 </td>
 </tr>
 <tr>
@@ -639,7 +639,7 @@ Weight
 (4,927.032)
 </td>
 <td>
-(5,904.517)
+(6,222.282)
 </td>
 </tr>
 <tr>
@@ -658,7 +658,7 @@ Total depth percentage
 110.992
 </td>
 <td>
-131.181
+121.138
 </td>
 </tr>
 <tr>
@@ -668,7 +668,7 @@ Total depth percentage
 (58.118)
 </td>
 <td>
-(66.939)
+(81.873)
 </td>
 </tr>
 <tr>
@@ -681,12 +681,12 @@ Total depth percentage
 </tr>
 <tr>
 <td style="text-align:left">
-Width (in mm)
+log(1 + Width (in mm))
 </td>
 <td>
 </td>
 <td>
--650.869<sup>**</sup>
+-6,131.217<sup>***</sup>
 </td>
 </tr>
 <tr>
@@ -695,7 +695,7 @@ Width (in mm)
 <td>
 </td>
 <td>
-(234.233)
+(1,081.401)
 </td>
 </tr>
 <tr>
@@ -714,7 +714,7 @@ Weight : Total depth percentage
 -179.676<sup>*</sup>
 </td>
 <td>
--219.581<sup>*</sup>
+-219.435
 </td>
 </tr>
 <tr>
@@ -724,7 +724,7 @@ Weight : Total depth percentage
 (80.122)
 </td>
 <td>
-(93.839)
+(104.641)
 </td>
 </tr>
 <tr>
@@ -787,7 +787,7 @@ R<sup>2</sup>
 0.858
 </td>
 <td>
-0.876
+0.879
 </td>
 </tr>
 <tr>
@@ -798,7 +798,7 @@ Adjusted R<sup>2</sup>
 0.858
 </td>
 <td>
-0.876
+0.879
 </td>
 </tr>
 <tr>
@@ -809,7 +809,7 @@ Residual Std. Error
 1,504.539 (df = 53932)
 </td>
 <td>
-1,407.387 (df = 53925)
+1,388.343 (df = 53925)
 </td>
 </tr>
 <tr>

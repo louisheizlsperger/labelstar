@@ -11,6 +11,8 @@ get_var_label(term, data, interaction_symbol = " : ")
 an interaction term (e.g., 'var1:var2' or 'var1*var2'), or a logarithmic transformation (e.g., 'log(var)' or 'log(1 + var)').}
 
 \item{data}{The data frame containing the variables. Each variable can have a 'label' attribute that provides a descriptive label.}
+
+\item{interaction_symbol}{A character string to use as the separator for interaction terms.}
 }
 \value{
 A character string representing the label for the given term. If the term is an interaction, the labels of the

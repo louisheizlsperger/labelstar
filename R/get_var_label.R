@@ -1,4 +1,4 @@
-#' Retrieve Variable Label from Term
+##' Retrieve Variable Label from Term
 #'
 #' This function retrieves the label of a variable from a given term and data frame. It handles interaction terms,
 #' logarithmic transformations, and standard variable names. The function returns the appropriate label for the term.
@@ -6,9 +6,10 @@
 #' @param term A character string representing the term for which the label is to be retrieved. This can be a variable name,
 #' an interaction term (e.g., 'var1:var2' or 'var1*var2'), or a logarithmic transformation (e.g., 'log(var)' or 'log(1 + var)').
 #' @param data The data frame containing the variables. Each variable can have a 'label' attribute that provides a descriptive label.
+#' @param interaction_symbol A character string to use as the separator for interaction terms.
 #' @return A character string representing the label for the given term. If the term is an interaction, the labels of the
 #' interacting variables are combined with ' : '. If the term involves a logarithmic transformation, the label is formatted accordingly.
-# Get variable label
+#' @export
 get_var_label <- function(term, data, interaction_symbol = ' : ') {
 
   if (grepl('[:*]', term)) {
@@ -40,5 +41,3 @@ get_var_label <- function(term, data, interaction_symbol = ' : ') {
   return(var_label_formatted)
 
 }
-
-

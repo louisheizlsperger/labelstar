@@ -12,7 +12,7 @@
 
 <meta name="author" content="Louis-Jonas Heizlsperger" />
 
-<meta name="date" content="2024-06-11" />
+<meta name="date" content="2024-06-20" />
 
 <title>Enhancing Variable Labels in Regression Models with labelstar</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Enhancing Variable Labels in Regression
 Models with labelstar</h1>
 <h4 class="author">Louis-Jonas Heizlsperger</h4>
-<h4 class="date">2024-06-11</h4>
+<h4 class="date">2024-06-20</h4>
 
 
 
@@ -565,11 +565,12 @@ F Statistic
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># Get updated labels</span></span>
 <span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>labels <span class="ot">&lt;-</span> labelstar<span class="sc">::</span><span class="fu">get_labels</span>(formulas, diamonds,</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>                                <span class="at">interaction_symbol =</span> <span class="st">&quot; : &quot;</span>, <span class="at">fe_symbol =</span> <span class="st">&quot;checkmark&quot;</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># Estimate regression models with fixed effects</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="at">.x =</span> formulas, <span class="at">.f =</span> lfe<span class="sc">::</span>felm,</span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>                     <span class="at">data =</span> diamonds)</span></code></pre></div>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>                                <span class="at">interaction_symbol =</span> <span class="st">&quot; : &quot;</span>, <span class="at">fe_symbol =</span> <span class="st">&quot;checkmark&quot;</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>                                <span class="at">dep_var_means =</span> <span class="st">&quot;raw&quot;</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co"># Estimate regression models with fixed effects</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="at">.x =</span> formulas, <span class="at">.f =</span> lfe<span class="sc">::</span>felm,</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>                     <span class="at">data =</span> diamonds)</span></code></pre></div>
 <p>Again, we create the <code>stargazer</code> table using custom
 labels.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Display the regression results with labeled variables</span></span>
@@ -579,7 +580,7 @@ labels.</p>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>          <span class="at">dep.var.labels =</span> labels<span class="sc">$</span>dep_var_label,</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>          <span class="at">covariate.labels =</span> labels<span class="sc">$</span>covariate_labels,</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>          <span class="co"># Additional table details</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>          <span class="at">add.lines =</span> labels<span class="sc">$</span>fe_labels,</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>          <span class="at">add.lines =</span> labels<span class="sc">$</span>add_lines,</span>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>          <span class="at">notes =</span> labels<span class="sc">$</span>table_notes)</span></code></pre></div>
 <table style="text-align:center">
@@ -758,6 +759,25 @@ Color - FE
 </td>
 <td>
 ✓
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Mean of DV
+</td>
+<td>
+3932.80
+</td>
+<td>
+3932.80
 </td>
 </tr>
 <tr>

@@ -94,7 +94,8 @@ formulas <- c(formula_fe1, formula_fe2)
 
 # Get updated labels
 labels <- labelstar::get_labels(formulas, diamonds,
-                                interaction_symbol = " : ", fe_symbol = "checkmark")
+                                interaction_symbol = " : ", fe_symbol = "checkmark",
+                                dep_var_means = "raw")
 
 # Estimate regression models with fixed effects
 models <- purrr::map(.x = formulas, .f = lfe::felm,
@@ -111,7 +112,7 @@ stargazer(models,
           dep.var.labels = labels$dep_var_label,
           covariate.labels = labels$covariate_labels,
           # Additional table details
-          add.lines = labels$fe_labels,
+          add.lines = labels$add_lines,
           notes.append = FALSE,
           notes = labels$table_notes)
 ```

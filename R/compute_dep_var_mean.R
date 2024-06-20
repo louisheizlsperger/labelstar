@@ -42,7 +42,11 @@ compute_dep_var_mean <- function(dep_var, formulas,
   dep_var_mean_fmt <- sprintf(fmt = "%.2f", dep_var_mean)
 
   # Specify added lines
-  dv_line_str <- stringr::str_glue("Mean of {type} DV")
+  dv_str <- case_when(
+    dep_var == raw_var ~ "",
+    dep_var != raw_var ~ paste0(" ", type)
+  )
+  dv_line_str <- stringr::str_glue("Mean of{dv_str} DV")
   mean_line <- c(dv_line_str, rep(dep_var_mean_fmt, length(formulas)))
   dv_mean_added_lines <- c(
                            mean = list(mean_line),

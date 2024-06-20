@@ -19,7 +19,7 @@
 #'
 get_labels <- function(formulas, data,
                        interaction_symbol = " : ", fe_symbol = "X",
-                       dep_var_means = c("no", "raw", "transformed")) {
+                       dep_var_means = "no") {     # other options: "raw", "transformed"
 
   # Ensure formulas is a list
   if (!is.list(formulas)) {

@@ -9,7 +9,7 @@ get_labels(
   data,
   interaction_symbol = " : ",
   fe_symbol = "X",
-  dep_var_means = c("no", "raw", "transformed")
+  dep_var_means = "no"
 )
 }
 \arguments{

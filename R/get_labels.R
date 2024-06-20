@@ -10,14 +10,16 @@
 #' @param fe_symbol A character string representing the preferred symbol for the inclusion of fixed effects (e.g., "x" or "Yes").
 #' @return A list with four elements: `dep_var_label` for the outcome variable label,
 #' `covariate_labels` for the covariate labels (only for the longest specification),
-#' `fe_labels` for the fixed effects labels, and `clustering_labels` for the clustering variable labels.
+#' `add_lines` for additional lines (including the fixed effects labels),
+#' and `clustering_labels` for the clustering variable labels.
 #' @import stringr
 #' @import dplyr
 #' @import purrr
 #' @export
 #'
 get_labels <- function(formulas, data,
-                       interaction_symbol = " : ", fe_symbol = "X") {
+                       interaction_symbol = " : ", fe_symbol = "X",
+                       dep_var_means = c("no", "raw", "transformed")) {
 
   # Ensure formulas is a list
   if (!is.list(formulas)) {
@@ -49,6 +51,18 @@ get_labels <- function(formulas, data,
   #=#=#=#=#=#=#=#=#=#=#=#
 
   add_lines <- detect_included_fes(formulas, data, fe_symbol)
+
+  #=#=#=#=#=#=#=#=#=#=#=#
+  ## Add Mean of Dependent Variable (if requested)
+  #=#=#=#=#=#=#=#=#=#=#=#
+
+  if (dep_var_means %in% c("raw", "transformed")) {
+
+    dep_var_mean_lines <- compute_dep_var_mean(dep_var = dep_var, formulas = formulas,
+                                               type = dep_var_means, data = data)
+    add_lines <- c(add_lines, dep_var_mean_lines)
+
+  }
 
   #=#=#=#=#=#=#=#=#=#=#=#
   ## Clustering
@@ -87,7 +101,7 @@ get_labels <- function(formulas, data,
   list_labels <- list(
     dep_var_label = dep_var_label,
     covariate_labels = covariate_labels,
-    fe_labels = add_lines,
+    add_lines = add_lines,
     table_notes = table_notes
   )
 

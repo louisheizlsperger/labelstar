@@ -13,11 +13,13 @@
 get_var_label <- function(term, data, interaction_symbol = ' : ') {
 
   if (grepl('[:*]', term)) {
+
     term <- gsub("\\s*[:*]\\s*", ":", term)
     interaction_vars <- unlist(strsplit(term, '[:*]'))
     interaction_labels <- sapply(interaction_vars, get_var_label, data = data)
     interaction_labels_fmt <- paste(interaction_labels, collapse = interaction_symbol)
     return(interaction_labels_fmt)
+
   }
 
   if (grepl('^log\\(1 \\+ .+\\)$', term)) {

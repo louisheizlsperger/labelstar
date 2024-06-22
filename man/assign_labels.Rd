@@ -12,7 +12,11 @@ assign_labels(data, variable_labels)
 \item{variable_labels}{A named list of custom labels where the names are the variable names
 in the data frame, and the values are the labels to be assigned.}
 }
+\value{
+The data frame with updated labels.
+}
 \description{
 This function assigns custom variable labels to a data frame. If a custom label is provided
-for a variable, it assigns that label; otherwise, it assigns the variable name as the label.
+for a variable, it assigns that label. If a variable already has a label and is not in the
+list of custom labels, it retains the old label. Otherwise, it assigns the variable name as the label.
 }

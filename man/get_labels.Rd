@@ -13,22 +13,20 @@ get_labels(
 )
 }
 \arguments{
-\item{formulas}{A list of model formulas.}
+\item{formulas}{A list or vector of model formulas.}
 
 \item{data}{The data frame containing the variables.}
 
 \item{interaction_symbol}{A character string representing the preferred symbol for interaction terms (e.g., ":" or "x").}
 
 \item{fe_symbol}{A character string representing the preferred symbol for the inclusion of fixed effects (e.g., "x" or "Yes").}
+
+\item{dep_var_means}{Either "no", "raw", or "transformed". If not "no", the mean of each dependent variable is computed.}
 }
 \value{
-A list with four elements: \code{dep_var_label} for the outcome variable label,
-\code{covariate_labels} for the covariate labels (only for the longest specification),
-\code{add_lines} for additional lines (including the fixed effects labels),
-and \code{clustering_labels} for the clustering variable labels.
+A list with elements: \code{dep_var_label} (a vector of outcome labels),
+\code{covariate_labels}, \code{add_lines} (which now includes the row with dependent variable means), and \code{table_notes}.
 }
 \description{
-This function retrieves the label of the outcome variable, the labels of the covariates,
-the fixed effects, and the clustering variables from given formulas and a data frame.
-The user can specify the preferred symbols for interaction terms and fixed effects.
+Now accommodates a regression list with potentially different outcome variables.
 }

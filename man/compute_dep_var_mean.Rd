@@ -2,13 +2,11 @@
 % Please edit documentation in R/compute_dep_var_mean.R
 \name{compute_dep_var_mean}
 \alias{compute_dep_var_mean}
-\title{Compute the Mean of the Dependent Variable}
+\title{Compute the Mean of the Dependent Variable Across Specifications}
 \usage{
-compute_dep_var_mean(dep_var, formulas, type = c("raw", "transformed"), data)
+compute_dep_var_mean(formulas, type = c("raw", "transformed"), data)
 }
 \arguments{
-\item{dep_var}{A character string representing the dependent variable, possibly with transformations.}
-
 \item{formulas}{A list of model formulas.}
 
 \item{type}{A character string indicating whether to compute the mean of the raw or transformed dependent variable. Options are "raw" or "transformed".}
@@ -16,10 +14,10 @@ compute_dep_var_mean(dep_var, formulas, type = c("raw", "transformed"), data)
 \item{data}{The data frame containing the variables.}
 }
 \value{
-A list of lines to be added to a regression table, indicating the mean of the dependent variable.
+A list of lines to be added to a regression table, with one mean per formula.
 }
 \description{
-This function calculates the mean of the dependent variable, either in its raw form
-or after applying the specified transformation. It returns a formatted list of lines
-to be added to a regression table, indicating the mean value of the dependent variable.
+This version loops over the list of formulas and computes the mean
+(raw or transformed) for each outcome variable as specified in the formula.
+It then returns a formatted list of lines for the regression table.
 }

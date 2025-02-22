@@ -7,14 +7,17 @@
 #' @param interaction_symbol A character string representing the preferred symbol for interaction terms (e.g., ":" or "x").
 #' @param fe_symbol A character string representing the preferred symbol for the inclusion of fixed effects (e.g., "x" or "Yes").
 #' @param dep_var_means Either "no", "raw", or "transformed". If not "no", the mean of each dependent variable is computed.
-#' @return A list with elements: `dep_var_label` (a vector of outcome labels),
+#' @param omit_vars A vector of strings specifying variable names whose labels should be omitted from covariate_labels.
+#' @return A list with elements: `dep_var_labels` (a vector of outcome labels),
 #' `covariate_labels`, `add_lines` (which now includes the row with dependent variable means), and `table_notes`.
 #' @import stringr dplyr purrr
 #' @export
 #'
 get_labels <- function(formulas, data,
+                       omit_vars = character(0),
                        interaction_symbol = " : ", fe_symbol = "X",
-                       dep_var_means = "no") {     # other options: "raw", "transformed"
+                       dep_var_means = "no" # other options: "raw", "transformed"
+                       ) {     
   
   # Ensure formulas is a list (this prevents issues when formulas are combined via c())
   formulas <- as.list(formulas)
@@ -31,6 +34,10 @@ get_labels <- function(formulas, data,
   ## Covariates
   #=#=#=#=#=#=#=#=#=#=#=#
   covariates <- extract_unique_covariates(formulas)
+  # Remove any variables that should be omitted
+  if (length(omit_vars) > 0) {
+    covariates <- setdiff(covariates, omit_vars)
+  }
   covariate_labels <- sapply(covariates, get_var_label, data = data,
                              interaction_symbol = interaction_symbol)
   
